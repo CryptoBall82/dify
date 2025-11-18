@@ -22,6 +22,7 @@ import AppUnavailable from '@/app/components/app-unavailable'
 import { API_KEY, APP_ID, APP_INFO, isShowPrompt, promptTemplate } from '@/config'
 import type { Annotation as AnnotationType } from '@/types/log'
 import { addFileInfos, sortAgentSorts } from '@/utils/tools'
+import styles from './index.module.css'
 
 export interface IMainProps {
   params: any
@@ -52,7 +53,7 @@ const Main: FC<IMainProps> = () => {
 
   useEffect(() => {
     if (APP_INFO?.title) { document.title = `${APP_INFO.title} - Powered by Dify` }
-  }, [APP_INFO?.title])
+  }, [])
 
   // onData change thought (the produce obj). https://github.com/immerjs/immer/issues/576
   useEffect(() => {
@@ -293,7 +294,7 @@ const Main: FC<IMainProps> = () => {
   }, [])
 
   const [isResponding, { setTrue: setRespondingTrue, setFalse: setRespondingFalse }] = useBoolean(false)
-  const [abortController, setAbortController] = useState<AbortController | null>(null)
+  const [_abortController, setAbortController] = useState<AbortController | null>(null)
   const { notify } = Toast
   const logError = (message: string) => {
     notify({ type: 'error', message })
@@ -315,12 +316,12 @@ const Main: FC<IMainProps> = () => {
     return true
   }
 
-  const [controlFocus, setControlFocus] = useState(0)
-  const [openingSuggestedQuestions, setOpeningSuggestedQuestions] = useState<string[]>([])
-  const [messageTaskId, setMessageTaskId] = useState('')
-  const [hasStopResponded, setHasStopResponded, getHasStopResponded] = useGetState(false)
-  const [isRespondingConIsCurrCon, setIsRespondingConCurrCon, getIsRespondingConIsCurrCon] = useGetState(true)
-  const [userQuery, setUserQuery] = useState('')
+  const [_controlFocus, _setControlFocus] = useState<number>(0)
+  const [_openingSuggestedQuestions, _setOpeningSuggestedQuestions] = useState<string[]>([])
+  const [_messageTaskId, _setMessageTaskId] = useState<string>('')
+  const [_hasStopResponded, _setHasStopResponded, _getHasStopResponded] = useGetState(false)
+  const [_isRespondingConIsCurrCon, _getIsRespondingConIsCurrCon] = useGetState(false)
+  const [_userQuery, _setUserQuery] = useState<string>('')
 
   const updateCurrentQA = ({
     responseItem,
@@ -662,7 +663,7 @@ const Main: FC<IMainProps> = () => {
         {/* sidebar */}
         {!isMobile && renderSidebar()}
         {isMobile && isShowSidebar && (
-          <div className='fixed inset-0 z-50' style={{ backgroundColor: 'rgba(35, 56, 118, 0.2)' }} onClick={hideSidebar} >
+          <div className={`fixed inset-0 z-50 ${styles.sidebarOverlay}`} onClick={hideSidebar} >
             <div className='inline-block' onClick={e => e.stopPropagation()}>
               {renderSidebar()}
             </div>

@@ -2,6 +2,7 @@
 import type { FC } from 'react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import styles from './app-unavailable.module.css'
 
 interface IAppUnavailableProps {
   isUnknownReason: boolean
@@ -18,10 +19,9 @@ const AppUnavailable: FC<IAppUnavailableProps> = ({
 
   return (
     <div className='flex items-center justify-center w-screen h-screen'>
-      <h1 className='mr-5 h-[50px] leading-[50px] pr-5 text-[24px] font-medium'
-        style={{
-          borderRight: '1px solid rgba(0,0,0,.3)',
-        }}>{(errMessage || isUnknownReason) ? 500 : 404}</h1>
+      <h1 className={`mr-5 h-[50px] leading-[50px] pr-5 text-[24px] font-medium ${styles.errorCode}`}>
+        {(errMessage || isUnknownReason) ? 500 : 404}
+      </h1>
       <div className='text-sm'>{message}</div>
     </div>
   )
