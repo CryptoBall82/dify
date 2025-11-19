@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import classNames from 'classnames'
 import Image from 'next/image'
-import style from './style.module.css'
+import styles from './style.module.css'
 
 export interface AppIconProps {
   size?: 'xs' | 'tiny' | 'small' | 'medium' | 'large'
@@ -21,9 +21,9 @@ const AppIcon: FC<AppIconProps> = ({
   return (
     <span
       className={classNames(
-        style.appIcon,
-        size !== 'medium' && style[size],
-        rounded && style.rounded,
+        styles.appIcon,
+        size !== 'medium' && styles[size],
+        rounded && styles.rounded,
         className ?? '',
       )}
       style={{
