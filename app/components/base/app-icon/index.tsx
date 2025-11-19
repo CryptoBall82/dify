@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import classNames from 'classnames'
+import Image from 'next/image'
 import style from './style.module.css'
 
 export interface AppIconProps {
@@ -28,7 +29,13 @@ const AppIcon: FC<AppIconProps> = ({
         background,
       }}
     >
-      🤖
+      <Image
+        src="/officialx-logo.png"
+        alt="OfficialX"
+        width={32}
+        height={32}
+        className="w-full h-full object-contain"
+      />
     </span>
   )
 }
