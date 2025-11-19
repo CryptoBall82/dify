@@ -14,6 +14,7 @@ export interface AppIconProps {
 const AppIcon: FC<AppIconProps> = ({
   size = 'medium',
   rounded = false,
+  icon,
   background,
   className,
 }) => {
@@ -30,7 +31,7 @@ const AppIcon: FC<AppIconProps> = ({
       }}
     >
       <Image
-        src="/officiax-logo.png"
+        src={icon || '/officiax-logo.png'}
         alt="OfficialX"
         width={32}
         height={32}
