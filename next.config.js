@@ -6,7 +6,6 @@ const nextConfig = {
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   reactStrictMode: true,
-  output: 'export',
   trailingSlash: true,
   // Moved from experimental as per Next.js 15 requirements
   outputFileTracingRoot: path.join(__dirname, '../../'),
