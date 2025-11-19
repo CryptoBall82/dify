@@ -154,6 +154,7 @@ const Main: FC<IMainProps> = () => {
 
     if (isNewConversation && isChatStarted) { setChatList(generateNewChatListWithOpenStatement()) }
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(handleConversationSwitch, [currConversationId, inited])
 
   const handleConversationIdChange = (id: string) => {
@@ -222,6 +223,7 @@ const Main: FC<IMainProps> = () => {
   }
 
   // init
+
   useEffect(() => {
     if (!hasSetAppConfig) {
       setAppUnavailable(true)
@@ -291,7 +293,23 @@ const Main: FC<IMainProps> = () => {
         }
       }
     })()
-  }, [])
+  }, [
+    hasSetAppConfig,
+    getConversationIdFromStorage,
+    setConversationList,
+    setCurrConversationId,
+    setExistConversationInfo,
+    setNewConversationInfo,
+    t,
+    APP_INFO,
+    APP_ID,
+    Toast,
+    fetchConversations,
+    fetchAppParams,
+    setLocaleOnClient,
+    userInputsFormToPromptVariables,
+    promptTemplate,
+  ])
 
   const [isResponding, { setTrue: setRespondingTrue, setFalse: setRespondingFalse }] = useBoolean(false)
   const [_abortController, setAbortController] = useState<AbortController | null>(null)
@@ -320,7 +338,7 @@ const Main: FC<IMainProps> = () => {
   const [_openingSuggestedQuestions, _setOpeningSuggestedQuestions] = useState<string[]>([])
   const [_messageTaskId, _setMessageTaskId] = useState<string>('')
   const [_hasStopResponded, _setHasStopResponded, _getHasStopResponded] = useGetState(false)
-  const [_isRespondingConIsCurrCon, _getIsRespondingConIsCurrCon] = useGetState(false)
+  const [_isRespondingConIsCurrCon, _setIsRespondingConIsCurrCon, _getIsRespondingConIsCurrCon] = useGetState(false)
   const [_userQuery, _setUserQuery] = useState<string>('')
 
   const updateCurrentQA = ({
@@ -444,10 +462,10 @@ const Main: FC<IMainProps> = () => {
 
         if (isFirstMessage && newConversationId) { tempNewConversationId = newConversationId }
 
-        setMessageTaskId(taskId)
+        _setMessageTaskId(taskId)
         // has switched to other conversation
         if (prevTempNewConversationId !== getCurrConversationId()) {
-          setIsRespondingConCurrCon(false)
+          _setIsRespondingConIsCurrCon(false)
           return
         }
         updateCurrentQA({
@@ -511,7 +529,7 @@ const Main: FC<IMainProps> = () => {
         }
         // has switched to other conversation
         if (prevTempNewConversationId !== getCurrConversationId()) {
-          setIsRespondingConCurrCon(false)
+          _setIsRespondingConIsCurrCon(false)
           return false
         }
 
@@ -571,7 +589,7 @@ const Main: FC<IMainProps> = () => {
           draft.splice(draft.findIndex(item => item.id === placeholderAnswerId), 1)
         }))
       },
-      onWorkflowStarted: ({ workflow_run_id, task_id }) => {
+      onWorkflowStarted: ({ workflow_run_id, task_id: _ }) => {
         // taskIdRef.current = task_id
         responseItem.workflow_run_id = workflow_run_id
         responseItem.workflowProcess = {

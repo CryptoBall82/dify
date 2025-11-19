@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef } from 'react'
+import { forwardRef, useCallback, useEffect, useRef } from 'react'
 import cn from 'classnames'
 
 interface IProps {
@@ -22,16 +22,16 @@ const AutoHeightTextarea = forwardRef(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const ref = outerRef || useRef<HTMLTextAreaElement>(null)
 
-    const doFocus = () => {
+    const doFocus = useCallback(() => {
       if (ref.current) {
         ref.current.setSelectionRange(value.length, value.length)
         ref.current.focus()
         return true
       }
       return false
-    }
+    }, [ref, value])
 
-    const focus = () => {
+    const focus = useCallback(() => {
       if (!doFocus()) {
         let hasFocus = false
         const runId = setInterval(() => {
@@ -39,14 +39,14 @@ const AutoHeightTextarea = forwardRef(
           if (hasFocus) { clearInterval(runId) }
         }, 100)
       }
-    }
+    }, [doFocus])
 
     useEffect(() => {
       if (autoFocus) { focus() }
-    }, [])
+    }, [autoFocus, focus])
     useEffect(() => {
       if (controlFocus) { focus() }
-    }, [controlFocus])
+    }, [controlFocus, focus])
 
     return (
       <div className='relative'>
