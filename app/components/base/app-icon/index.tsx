@@ -30,7 +30,7 @@ const AppIcon: FC<AppIconProps> = ({
       }}
     >
       <Image
-        src="officialx-logo.png"
+        src="/officiax-logo.png"
         alt="OfficialX"
         width={32}
         height={32}
