@@ -5,7 +5,7 @@ export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`
 export const APP_INFO: AppInfo = {
   title: 'OfficiaX AI',
   description: 'OfficiaX AI delivers lightning-fast answers to your rule questions, streamlining your game management.',
-  copyright: '© 2025 OfficiaX LLC. All rights reserved.',
+  copyright: `© ${new Date().getFullYear()} OfficiaX LLC. All rights reserved.`,
   privacy_policy: 'https://www.officiax.com/privacy',
   default_language: 'en',
   disable_session_same_site: true, // set it to true if you want to embed the chatbot in an iframe
