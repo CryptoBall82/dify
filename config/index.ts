@@ -9,6 +9,7 @@ export const APP_INFO: AppInfo = {
   privacy_policy: 'https://www.officiax.com/privacy',
   default_language: 'en',
   disable_session_same_site: true, // set it to true if you want to embed the chatbot in an iframe
+  disable_session_same_site: true, // set it to true if you want to embed the chatbot in an iframe
 }
 
 export const isShowPrompt = false
