@@ -32,6 +32,7 @@ export interface IChatProps {
   onFeedback?: FeedbackFunc
   checkCanSend?: () => boolean
   onSend?: (message: string, files: VisionFile[]) => void
+  onStop?: () => void
   useCurrentUserAvatar?: boolean
   isResponding?: boolean
   controlClearQuery?: number

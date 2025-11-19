@@ -368,10 +368,13 @@ export const ssePost = (
     onNodeStarted,
     onNodeFinished,
     onError,
+    getAbortController,
   }: IOtherOptions,
 ) => {
+  const abortController = new AbortController()
   const options = Object.assign({}, baseOptions, {
     method: 'POST',
+    signal: abortController.signal,
   }, fetchOptions)
 
   const urlPrefix = API_PREFIX
@@ -379,6 +382,11 @@ export const ssePost = (
 
   const { body } = options
   if (body) { options.body = JSON.stringify(body) }
+
+  // Pass the abort controller to the caller
+  if (getAbortController) {
+    getAbortController(abortController)
+  }
 
   globalThis.fetch(urlWithPrefix, options)
     .then((res: any) => {
@@ -403,6 +411,11 @@ export const ssePost = (
       }, onThought, onMessageEnd, onMessageReplace, onFile, onWorkflowStarted, onWorkflowFinished, onNodeStarted, onNodeFinished)
     })
     .catch((e) => {
+      // Don't show error toast for aborted requests
+      if (e.name === 'AbortError') {
+        onCompleted?.(true)
+        return
+      }
       Toast.notify({ type: 'error', message: e })
       onError?.(e)
     })
